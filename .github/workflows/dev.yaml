@@ -1,4 +1,4 @@
-name: Security Scans (SAST & SCA)
+name: Security Scans (SAST, SCA & Trivy)
 
 on:
   pull_request:
@@ -26,3 +26,18 @@ jobs:
         uses: docker://docker.io/fluidattacks/sca:latest
         with:
           args: sca scan .
+
+  trivy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner (filesystem)
+        uses: aquasecurity/trivy-action@v0.16.2
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
