@@ -14,8 +14,8 @@ jobs:
       - name: Run SAST scan
         uses: docker://docker.io/fluidattacks/sast:latest
         with:
-          args: sast --strict scan .
-
+          args: sast --strict scan config.yaml
+          
       - name: Upload SAST CSV results
         uses: actions/upload-artifact@v4
         with:
