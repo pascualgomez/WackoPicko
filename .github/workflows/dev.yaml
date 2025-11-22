@@ -14,7 +14,7 @@ jobs:
       - name: Run SAST scan
         uses: docker://docker.io/fluidattacks/sast:latest
         with:
-          args: sast scan .
+          args: sast --strict scan .
 
   sca:
     runs-on: ubuntu-latest
@@ -25,7 +25,7 @@ jobs:
       - name: Run SCA scan
         uses: docker://docker.io/fluidattacks/sca:latest
         with:
-          args: sca scan .
+          args: sca --strict scan .
 
   trivy:
     runs-on: ubuntu-latest
@@ -39,5 +39,5 @@ jobs:
           scan-type: 'fs'
           scan-ref: '.'
           format: 'table'
-          exit-code: '0'
+          exit-code: '1'
           ignore-unfixed: true
