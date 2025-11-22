@@ -1,0 +1,28 @@
+name: Security Scans (SAST & SCA)
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  sast:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run SAST scan
+        uses: docker://docker.io/fluidattacks/sast:latest
+        with:
+          args: sast scan .
+
+  sca:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run SCA scan
+        uses: docker://docker.io/fluidattacks/sca:latest
+        with:
+          args: sca scan .
